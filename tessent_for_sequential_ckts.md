@@ -28,5 +28,11 @@
 ![image](https://user-images.githubusercontent.com/98731221/208596293-9560db6b-9f58-4d41-8997-63a0c8cd431d.png)
 
 
+## PART-2 
+
+![image](https://user-images.githubusercontent.com/98731221/208596980-c324be4d-571f-4e26-b371-2de934443a7f.png)
+
+
+
 
 
