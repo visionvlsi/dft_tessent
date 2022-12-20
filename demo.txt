@@ -1,0 +1,261 @@
+#-----------------------------------------------------------------------#
+# #
+# DEMO 1 #
+# SCAN INSERTION USING DFTADVISOR (TESSENT SCAN) #
+# #
+#-----------------------------------------------------------------------#
+# STEP-1
+# CHANGE YOUR DIRECTORY TO DEMO_1
+cd DEMO_1
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-2
+# INVOKE THE TESSENT SHELL & DFTADVISOR TOOL USING THE FOLLOWING COMMAND
+tessent -shell
+set_context dft -scan
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-3
+# READ IN VERILOG GATE LEVEL NETLIST
+read_verilog pipe_net_noscan.v
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-4
+# READ IN DFT CELL LIBRARY
+read_cell_library adk.atpg
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-5
+# SET THE NAME OF THE LOG FILE. ALL THE MESSAGES WILL BE LOGGED INTO
+# THIS LOG FILE.
+set_logfile_handling scan_insertion.log -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-6
+# SET THE TOP LEVEL OF THE DESIGN.
+# When you issue this command without an argument, the tool
+# automatically finds the top level of the design if only one exists.
+# If the tool finds more than one top, the tool presents a list of the
+# possible top levels; you must reissue the command and specify one
+# of the top levels listed.
+set_current_design
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-7
+# TELL THE TOOL TO AUTOMATICALLY IDENTIFY AND ADD CLOCKS.
+analyze_control_signals -auto_fix
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-8
+# PERFORM DESIGN ANALYSIS
+set_system_mode analysis
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-9
+# INSERT SCAN IN THE DESIGN.
+insert_test_logic
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-10
+# WRITE SCAN INSERTED NETLIST.
+write_design -output_file pipe_scan.v -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-11
+# WRITE ATPG SETUP FILES.
+write_atpg_setup pipe_scan -procfile -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-12
+# EXIT THE TOOL.
+exit
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-13
+# EXAMINE THE SCAN INSERTED NETLIST AND ATPG SETUP FILES.
+#-----------------------------------------------------------------------#
+#
+# DEMO_2 #
+# SCAN INSERTION (WITH DRC VIOLATION) USING DFTADVISOR (TESSENT SCAN) #
+# #
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-1
+# CHANGE YOUR DIRECTORY TO DEMO_2
+cd DEMO_2
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-2
+# INVOKE THE TESSENT SHELL & DFTADVISOR TOOL USING THE FOLLOWING COMMAND
+tessent -shell
+set_context dft -scan
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-3
+# READ IN VERILOG GATE LEVEL NETLIST
+read_verilog pipe_net_noscan.v
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-4
+# READ IN DFT CELL LIBRARY
+read_cell_library adk.atpg
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-5
+# SET THE NAME OF THE LOG FILE. ALL THE MESSAGES WILL BE LOGGED INTO
+# THIS LOG FILE.
+set_logfile_handling scan_insertion.log -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-6
+# SET THE TOP LEVEL OF THE DESIGN.
+# When you issue this command without an argument, the tool
+# automatically finds the top level of the design if only one exists.
+# If the tool finds more than one top, the tool presents a list of the
+# possible top levels; you must reissue the command and specify one
+# of the top levels listed.
+set_current_design
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-7
+# TELL THE TOOL TO AUTOMATICALLY IDENTIFY AND ADD CLOCKS.
+analyze_control_signals -auto_fix
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-8
+# PERFORM DESIGN ANALYSIS
+set_system_mode analysis
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-9
+# EXAMINE THE TRANSCRIPT FOR DRC VIOLATIONS. THERE ARE TWO S1 VIOLATIONS
+# BEING REPORTED. FOLLOW THW NEXT STEPS TO EXAMINE AND CORRECT THESE
+# DRC VIOLATIONS.
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-10
+# INVOKE DFT VISUALIZER TO DEBUG THESE DRC VIOLATIONS.
+open_visualizer
+# ONCE THE DFTVISUALIZER IS UP, FOLLOW THE FOLLWOING STEPS TO DEBUG DRC
+# VIOLATIONS GRAPHICALLY.
+1) Click on "Debug DRC Violations" Button.
+2) Select a Violation ID and click on Analyze.
+# CLOSE THE DFTVISUALIZER.
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-11
+# GO BACK TO THE SETUP MODE AND ENABLE TEST LOGIC ON CLOCKS.
+set_system_mode SETUP
+set_test_logic -clock on
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-12
+# PERFORM DESIGN ANALYSIS. REVIEW THE TRANSCRIPT FILE TO SEE THE DRC
+# VIOLATION HANDLING.
+set_system_mode analysis
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-13
+# INSERT SCAN IN THE DESIGN.
+insert_test_logic
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-14
+# WRITE SCAN INSERTED NETLIST.
+write_design -output_file pipe_scan.v -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-15
+# WRITE ATPG SETUP FILES.
+write_atpg_setup pipe_scan -procfile -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-16
+# EXIT THE TOOL.
+exit
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-17
+# EXAMINE THE SCAN INSERTED NETLIST AND ATPG SETUP FILES.
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# #
+# DEMO 3 #
+# SCAN INSERTION & ATPG USING TESSENT SCAN & FASTSCAN #
+# #
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-1
+# CHANGE YOUR DIRECTORY TO DEMO_1
+cd DEMO_3
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-2
+# FOLLOW THE STEPS MENTIONED IN DEMO_1 TO CREATE SCAN INSERTED NETLIST
+# THE FOLLOWING FILES GENERATED USING TESSENT SCAN WILL BE USED BY
+# TESSENT FASTSCAN TO GENERATE THE PATTERNS.
+# 1) pipe_scan.v -- Scan Inserted Netlist.
+# 2) pipe_scan.dofile -- DOfile describing the scan information.
+# 3) pipe_scan.testproc -- Test Procedure File.
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-3
+# INVOKE THE TESSENT SHELL & FASTSCAN TOOL USING THE FOLLOWING COMMAND
+tessent -shell
+set_context patterns -scan
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-4
+# READ IN SCAN INSERTED VERILOG GATE LEVEL NETLIST
+read_verilog pipe_scan.v
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-5
+# READ IN DFT CELL LIBRARY
+read_cell_library adk.atpg
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-6
+# SET THE NAME OF THE LOG FILE. ALL THE MESSAGES WILL BE LOGGED INTO
+# THIS LOG FILE.
+set_logfile_handling pattern_generation.log -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-7
+# SET THE TOP LEVEL OF THE DESIGN.
+# When you issue this command without an argument, the tool
+# automatically finds the top level of the design if only one exists.
+# If the tool finds more than one top, the tool presents a list of the
+# possible top levels; you must reissue the command and specify one
+# of the top levels listed.
+set_current_design
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-8
+# RUN THE DOFILE GENERATED BY TESSENT SCAN TOOL
+dofile pipe_scan.dofile
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-9
+# PERFORM DESIGN ANALYSIS
+set_system_mode analysis
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-10
+# GENERATE TEST PATTERNS
+create_patterns
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-11
+# SAVE TEST PATTERNS IN ASCII FORMAT
+write_patterns patterns_ascii -ascii -rep
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-12
+# EXIT THE TOOL.
+exit
+#-----------------------------------------------------------------------#
+#-----------------------------------------------------------------------#
+# STEP-13
+# EXAMINE THE GENERATED PATTERNS.
+#-----------------------------------------------------------------------#
