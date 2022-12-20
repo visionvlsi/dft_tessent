@@ -40,6 +40,9 @@
 
 
 
+## Benchmark circuits for sequential logic
+
+![image](https://user-images.githubusercontent.com/98731221/208605026-b8210acc-e6a7-436f-bdec-9522b3c600a2.png)
 
 
 
