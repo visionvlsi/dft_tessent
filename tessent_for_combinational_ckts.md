@@ -10,4 +10,9 @@
 
 ![image](https://user-images.githubusercontent.com/98731221/208606315-ffaa8771-d899-4791-9f5d-354700245b05.png)
 
+#### DS= Detectable faults
+
+![image](https://user-images.githubusercontent.com/98731221/208606588-09f82e73-31ea-4ded-865e-8fc4f884673e.png)
+
+
 
